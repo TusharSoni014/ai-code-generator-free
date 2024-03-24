@@ -24,7 +24,7 @@ function App() {
   const handleGenerateCode = async () => {
     try {
       dispatch(setCodeGenerationLoading(true));
-      const aiGeneratedCode = await axios.post("http://localhost:4000", {
+      const aiGeneratedCode = await axios.post(import.meta.env.VITE_BACKEND!, {
         prompt: prompt,
       });
       dispatch(setGeneratedCode(aiGeneratedCode.data.response));
@@ -38,10 +38,13 @@ function App() {
   const handleContinueGeneration = async () => {
     dispatch(setCodeGenerationLoading(true));
     try {
-      const continuedCode = await axios.post("http://localhost:4000/continue", {
-        prompt: prompt,
-        content: aiGeneratedCode,
-      });
+      const continuedCode = await axios.post(
+        `${import.meta.env.VITE_BACKEND}/continue`,
+        {
+          prompt: prompt,
+          content: aiGeneratedCode,
+        }
+      );
       dispatch(updateGeneratedCode(continuedCode.data.response));
     } catch (error) {
       console.log(error);
