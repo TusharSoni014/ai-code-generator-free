@@ -6,6 +6,7 @@ config();
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: process.env.FRONTEND_URL }));
+console.log("ENV URL: ", process.env.FRONTEND_URL);
 
 app.post("/", async (req, res) => {
   const { prompt } = req.body;
