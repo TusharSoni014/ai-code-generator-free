@@ -5,9 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ origin: "http://localhost:5173" }));
+app.use((0, cors_1.default)({
+    origin: [
+        "https://ai-code-generator-free.vercel.app",
+        "http://localhost:5173",
+    ],
+}));
 app.post("/", async (req, res) => {
     const { prompt } = req.body;
     const response = await fetch("https://www.blackbox.ai/api/chat", {
